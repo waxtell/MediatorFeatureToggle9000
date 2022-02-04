@@ -1,2 +1,3 @@
 # MediatorFeatureToggle9000
-A terrifying yet functional solution for feature toggling Mediator request handlers
+
+Not saying that this is good or wise or even responsible, only that it solves a problem.  Use at your own risk.
