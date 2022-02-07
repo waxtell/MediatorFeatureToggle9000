@@ -13,14 +13,10 @@ serviceCollection.AddNamedTransient<string, IRequestHandler<GetStuffQuery, int>,
 var provider = serviceCollection.BuildServiceProvider();
 
 MediatorExtensions
-    .AddFeatureToggleHandler
+    .AddFeatureToggleHandler<string,GetStuffQuery,int>
     (
-        typeof(GetStuffQuery), 
-        new FeatureToggleHandler<GetStuffQuery, int, string>
-        (
-            provider,
-            async (request, _) => await Task.FromResult(request.CustomerId % 2 == 0 ? Feature:Control)
-        )
+        key => provider.GetService<string,IRequestHandler<GetStuffQuery,int>>(key),
+        async (request, _) => await Task.FromResult(request.CustomerId % 2 == 0 ? Feature : Control)
     );
 
 var mediator = provider.GetService<IMediator>();
@@ -37,8 +33,6 @@ for (var i = 0; i < 10; i++)
 
     Console.WriteLine(result);
 }
-
-Console.ReadLine();
 
 namespace MediatorFeatureToggle9000
 {

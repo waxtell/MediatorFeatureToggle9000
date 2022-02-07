@@ -7,13 +7,13 @@ namespace MediatorFeatureToggle9000;
 
 public static class MediatorExtensions
 {
-    // Ideally the following method could be exposed in Mediator.cs
+    // Ideally the following method would be exposed in Mediator.cs
     //public static void AddFeatureToggleHandler(Type type, RequestHandlerBase handler)
     //{
     //    _requestHandlers[type] = handler;
     //}
 
-    public static void AddFeatureToggleHandler(Type type, RequestHandlerBase handler)
+    private static void AddFeatureToggleHandler(Type type, RequestHandlerBase handler)
     {
 #pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
         if 
@@ -33,5 +33,19 @@ public static class MediatorExtensions
 #pragma warning restore S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
 
         requestHandlers[type] = handler;
+    }
+
+    public static void AddFeatureToggleHandler<TKey, TRequest,TResponse>(Func<TKey, IRequestHandler<TRequest, TResponse>> handlerResolver, Func<TRequest, CancellationToken, Task<TKey>> keyProvider)
+        where TRequest : IRequest<TResponse>
+    {
+        AddFeatureToggleHandler
+        (
+            typeof(TRequest),
+            new FeatureToggleHandler<TRequest, TResponse, TKey>
+            (
+                handlerResolver,
+                keyProvider
+            )
+        );
     }
 }
