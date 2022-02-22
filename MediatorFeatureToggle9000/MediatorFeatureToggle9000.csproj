@@ -10,6 +10,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-		<PackageReference Include="DependencyInjection.KeyedRegistration.Extensions" Version="1.0.0" />
+		<PackageReference Include="DependencyInjection.KeyedRegistration.Extensions" Version="1.0.1" />
 	</ItemGroup>
 </Project>
